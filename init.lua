@@ -98,25 +98,25 @@ vim.g.have_nerd_font = false
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
--- Make line numbers default
-vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
-
--- Enable mouse mode, can be useful for resizing splits for example!
-vim.opt.mouse = 'a'
-
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
--- Sync clipboard between OS and Neovim.
---  Schedule the setting after `UiEnter` because it can increase startup-time.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
-vim.schedule(function()
-  vim.opt.clipboard = 'unnamedplus'
-end)
+--========================
+--========= OLD ==========
+--========================
+-- -- Sync clipboard between OS and Neovim.
+-- --  Schedule the setting after `UiEnter` because it can increase startup-time.
+-- --  Remove this option if you want your OS clipboard to remain independent.
+-- --  See `:help 'clipboard'`
+--  vim.schedule(function()
+--    vim.opt.clipboard = 'unnamedplus'
+--  end)
+--========================
+--========================
+--========================
+--========================
+--========= NEW ==========
+--========================
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -153,9 +153,6 @@ vim.opt.inccommand = 'split'
 
 -- Show which line your cursor is on
 vim.opt.cursorline = true
-
--- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -596,6 +593,7 @@ require('lazy').setup({
       --     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
       --   end
       -- end
+      --
 
       -- LSP servers and clients are able to communicate to each other what features they support.
       --  By default, Neovim doesn't support everything that is in the LSP specification.
@@ -708,6 +706,8 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -841,10 +841,21 @@ require('lazy').setup({
     'folke/tokyonight.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      --========================
+      --========= OLD ==========
+      --========================
+      -- -- Load the colorscheme here.
+      -- -- Like many other themes, this one has different styles, and you could load
+      -- -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
+
+      --  vim.cmd.colorscheme 'tokyonight-night'
+      --========================
+      --========================
+      --========================
+      vim.cmd.colorscheme 'moonfly'
+      --========================
+      --========= NEW ==========
+      --========================
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
@@ -872,20 +883,29 @@ require('lazy').setup({
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      --========================
+      --========= OLD ==========
+      --========================
+      -- -- Simple and easy statusline.
+      -- --  You could remove this setup call if you don't like it,
+      -- --  and try some other statusline plugin
+      -- local statusline = require 'mini.statusline'
+      -- -- set use_icons to true if you have a Nerd Font
+      -- statusline.setup { use_icons = vim.g.have_nerd_font }
 
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
+      -- -- You can configure sections in the statusline by overriding their
+      -- -- default behavior. For example, here we set the section for
+      -- -- cursor location to LINE:COLUMN
+      -- ---@diagnostic disable-next-line: duplicate-set-field
+      -- statusline.section_location = function()
+      --   return '%2l:%-2v'
+      -- end
+      --========================
+      --========================
+      --========================
+      --========================
+      --========= NEW ==========
+      --========================
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
@@ -943,6 +963,21 @@ require('lazy').setup({
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
+
+  --=======================================
+  --========= CUSTOM PLUGINS ==============
+  --=======================================
+
+  --========== COLORSCHEMES ===============
+  'tpope/vim-fugitive',
+  'rebelot/kanagawa.nvim',
+  'bluz71/vim-moonfly-colors',
+  'itchyny/lightline.vim',
+  --======== END COLORSCHEMES =============
+
+  --=======================================
+  --======= END CUSTOM PLUGINS ============
+  --=======================================
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
@@ -967,3 +1002,49 @@ require('lazy').setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+--=======================================
+--============= CUSTOM ==================
+--=======================================
+
+--============ KEYMAPS ==================
+
+vim.keymap.set('i', 'jj', '<ESC>')
+
+--============ END KEYMAPS ==============
+
+--============ VIM CONFIG ===============
+
+vim.opt.relativenumber = true
+
+-- Minimal number of screen lines to keep above and below the cursor.
+vim.opt.scrolloff = 5
+
+--=========== END VIM CONFIG ============
+
+--============== GLEAM ==================
+
+require('lspconfig').gleam.setup {}
+
+--============ END GLEAM ================
+
+--=========== TYPESCRIPT ================
+-- added
+
+--========== END TYPESCRIPT ==============
+--
+
+--============ LIGHTLINE =================
+vim.g.lightline = { colorscheme = 'powerline' }
+--============ LIGHTLINE =================
+--=======================================
+--============= END CUSTOM ==============
+--=======================================
+-- Make line numbers default
+vim.opt.number = true
+-- You can also add relative line numbers, to help with jumping.
+--  Experiment for yourself to see if you like it!
+-- vim.opt.relativenumber = true
+
+-- Enable mouse mode, can be useful for resizing splits for example!
+vim.opt.mouse = 'a'
