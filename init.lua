@@ -242,15 +242,7 @@ require('lazy').setup({
   -- See `:help gitsigns` to understand what the configuration keys do
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
+    opts = {},
   },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
@@ -634,6 +626,7 @@ require('lazy').setup({
         cssls = {},
         jsonls = {},
         markdownlint = {},
+        yamlls = {},
         --========================
         --========= NEW ==========
         --========================
@@ -722,7 +715,9 @@ require('lazy').setup({
         lua = { 'stylua' },
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         typescript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescriptreact = { 'prettierd', stop_after_first = true },
         json = { 'prettierd', 'prettier' },
+        jsonc = { 'prettierd', 'prettier' },
         html = { 'prettierd', 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
@@ -750,6 +745,9 @@ require('lazy').setup({
           return 'make install_jsregexp'
         end)(),
         dependencies = {
+          --========================
+          --========= OLD ==========
+          --========================
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
@@ -759,6 +757,20 @@ require('lazy').setup({
           --     require('luasnip.loaders.from_vscode').lazy_load()
           --   end,
           -- },
+          --========================
+          --========================
+          --========================
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+              require('luasnip').filetype_extend('typescript', { 'javascript' })
+              require('luasnip').filetype_extend('typescriptreact', { 'tsdoc', 'javascript', 'typescript' })
+            end,
+          },
+          --========================
+          --========= NEW ==========
+          --========================
         },
       },
       'saadparwaiz1/cmp_luasnip',
@@ -983,12 +995,12 @@ require('lazy').setup({
   --=======================================
   --========= CUSTOM PLUGINS ==============
   --=======================================
+  'tpope/vim-fugitive',
+  'itchyny/lightline.vim',
 
   --========== COLORSCHEMES ===============
-  'tpope/vim-fugitive',
   'rebelot/kanagawa.nvim',
   'bluz71/vim-moonfly-colors',
-  'itchyny/lightline.vim',
   --======== END COLORSCHEMES =============
 
   --=======================================
@@ -1035,6 +1047,12 @@ vim.opt.number = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
+
+-- limit completions
+vim.opt.pumheight = 17
+
+-- line width
+vim.opt.textwidth = 80
 
 --============ END KEYMAPS ==============
 
