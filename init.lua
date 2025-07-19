@@ -382,6 +382,11 @@ require('lazy').setup({
             require('telescope.themes').get_dropdown(),
           },
         },
+        pickers = {
+          find_files = {
+            hidden = true,
+          },
+        },
       }
 
       -- Enable Telescope extensions if they are installed
@@ -502,6 +507,7 @@ require('lazy').setup({
           -- Jump to the definition of the word under your cursor.
           --  This is where a variable was first declared, or where a function is defined, etc.
           --  To jump back, press <C-t>.
+
           map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
           -- Find references for the word under your cursor.
@@ -531,6 +537,10 @@ require('lazy').setup({
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
+
+          map('gh', function()
+            vim.diagnostic.open_float()
+          end, 'asdf')
 
           -- WARN: This is not Goto Definition, this is Goto Declaration.
           --  For example, in C this would take you to the header.
@@ -628,7 +638,7 @@ require('lazy').setup({
         markdownlint = {},
         yamlls = {},
         lexical = {
-          cmd = { '/home/asdff01/.local/share/nvim-kickstart/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh' },
+          cmd = { '/Users/asdff01/.local/share/kickstart-nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh' },
           root_dir = function(fname)
             return require('lspconfig').util.root_pattern('mix.exs', '.git')(fname) or vim.loop.cwd()
           end,
@@ -950,7 +960,6 @@ require('lazy').setup({
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
-    lazy = true,
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
@@ -1093,6 +1102,23 @@ require('lazy').setup({
       }
     end,
   },
+  {
+    'tiagovla/tokyodark.nvim',
+    opts = {
+      -- custom options here
+      styles = {
+        comments = { italic = true }, -- style for comments
+        keywords = { italic = false }, -- style for keywords
+        identifiers = { italic = false }, -- style for identifiers
+        functions = {}, -- style for functions
+        variables = {}, -- style for variables
+      },
+    },
+    config = function(_, opts)
+      require('tokyodark').setup(opts) -- calling setup is optional
+      vim.cmd [[colorscheme tokyodark]]
+    end,
+  },
   --======== END COLORSCHEMES =============
 
   --=======================================
@@ -1171,12 +1197,12 @@ require('lspconfig').gleam.setup {}
 
 --============ LIGHTLINE =================
 vim.g.lightline = {
-  colorscheme = 'rosepine_moon', --'powerline'
+  colorscheme = 'rosepine', --'powerline'
 }
 --============ LIGHTLINE =================
 
 --============ COLORSCHEME ===============
-vim.cmd.colorscheme 'rose-pine'
+vim.cmd.colorscheme 'tokyodark'
 --========= END COLORSCHEME ==============
 
 --=======================================
