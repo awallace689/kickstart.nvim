@@ -698,8 +698,17 @@ require('lazy').setup({
         jsonls = {},
         markdownlint = {},
         yamlls = {},
-        lexical = {
-          cmd = { '/Users/asdff01/.local/share/kickstart-nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh' },
+        -- lexical = {
+        --   cmd = { '/Users/asdff01/.local/share/kickstart-nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh' },
+        --   root_dir = function(fname)
+        --     return require('lspconfig').util.root_pattern('mix.exs', '.git')(fname) or vim.loop.cwd()
+        --   end,
+        --   filetypes = { 'elixir', 'eelixir', 'heex' },
+        --   -- optional settings
+        --   settings = {},
+        -- },
+        expert = {
+          cmd = { '/home/asdff01/.local/share/nvim-kickstart/mason/packages/expert/expert_linux_amd64', '--stdio' },
           root_dir = function(fname)
             return require('lspconfig').util.root_pattern('mix.exs', '.git')(fname) or vim.loop.cwd()
           end,
@@ -1243,15 +1252,15 @@ require('lspconfig').gleam.setup {}
 
 --========== END TYPESCRIPT ==============
 
+--============ COLORSCHEME ===============
+vim.cmd.colorscheme 'tokyodark'
+--========= END COLORSCHEME ==============
+
 --============ LIGHTLINE =================
 vim.g.lightline = {
   colorscheme = 'rosepine', --'powerline'
 }
---============ LIGHTLINE =================
-
---============ COLORSCHEME ===============
-vim.cmd.colorscheme 'tokyodark'
---========= END COLORSCHEME ==============
+--============ END LIGHTLINE =================
 
 --=======================================
 --============= END CUSTOM ==============
