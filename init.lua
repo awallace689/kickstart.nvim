@@ -962,7 +962,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'tokyonight-night'
     end,
   },
 
@@ -1173,9 +1173,10 @@ require('lazy').setup({
     },
     config = function(_, opts)
       require('tokyodark').setup(opts) -- calling setup is optional
-      vim.cmd [[colorscheme tokyodark]]
+      -- vim.cmd [[colorscheme tokyodark]]
     end,
   },
+  'github/copilot.vim',
   --======== END COLORSCHEMES =============
 
   --=======================================
@@ -1253,7 +1254,7 @@ require('lspconfig').gleam.setup {}
 --========== END TYPESCRIPT ==============
 
 --============ COLORSCHEME ===============
-vim.cmd.colorscheme 'tokyodark'
+vim.cmd.colorscheme 'rose-pine'
 --========= END COLORSCHEME ==============
 
 --============ LIGHTLINE =================
@@ -1261,6 +1262,14 @@ vim.g.lightline = {
   colorscheme = 'rosepine', --'powerline'
 }
 --============ END LIGHTLINE =================
+
+--=============== COPILOT ====================
+vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
+  expr = true,
+  replace_keycodes = false,
+})
+vim.g.copilot_no_tab_map = true
+--============== END COPILOT =================
 
 --=======================================
 --============= END CUSTOM ==============
